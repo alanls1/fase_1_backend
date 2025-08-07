@@ -77,9 +77,9 @@ export async function login(
     accessToken,
     refreshToken,
     user: {
-      uid_usuario: user.uid_usuarios,
-      email: user.email,
-      name: user.nome,
+      uid_usuario: user?.uid_usuarios,
+      email: user?.email,
+      name: user?.nome,
     },
   };
 }

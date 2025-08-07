@@ -16,9 +16,9 @@ export class loadUserDTO {
   accessToken!: string;
   refreshToken!: string;
   user!: {
-    uid_usuario?: string;
-    email?: string;
-    name?: string;
+    uid_usuario?: string | undefined;
+    email?: string | undefined;
+    name?: string | undefined;
   };
 }
 
