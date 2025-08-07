@@ -2,19 +2,22 @@ import { Router } from "express";
 import {
   deleteMetrics,
   getMetrics,
+  getMetricsByCode,
   postMetrics,
   putMetrics,
 } from "./metrics.controller";
-import { isAdmin } from "../middleware/isAdmin.middleware";
+import { authentication } from "../middleware/authentication.middleware";
 
 const router = Router();
 
 router.get("/", getMetrics);
 
-router.post("/", isAdmin, postMetrics);
+router.get("/", getMetricsByCode);
 
-router.put("/", isAdmin, putMetrics);
+router.post("/", authentication, postMetrics);
 
-router.delete("/", isAdmin, deleteMetrics);
+router.put("/", authentication, putMetrics);
+
+router.delete("/", authentication, deleteMetrics);
 
 export default router;
