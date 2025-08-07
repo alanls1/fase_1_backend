@@ -39,6 +39,7 @@ tbl_usuarios.init(
   {
     sequelize,
     modelName: "tbl_usuarios",
+    timestamps: false,
   }
 );
 

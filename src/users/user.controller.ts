@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import * as service from "./user.service";
 import { plainToInstance } from "class-transformer";
-import { CreateUserDTO, loginDTO } from "./user.dto";
+import { CreateUserDTO, deleteDTO, loginDTO } from "./user.dto";
 import { validate } from "class-validator";
 
 export async function createUser(req: Request, res: Response) {
@@ -42,6 +42,22 @@ export async function login(req: Request, res: Response) {
     user_agent,
   });
   res.status(200).json(token);
+}
+
+export async function deleteAccount(req: Request, res: Response) {
+  const dto = plainToInstance(deleteDTO, req.query);
+  const errors = await validate(dto);
+
+  //Se tiver erros retorna
+  if (errors.length > 0) {
+    return res.status(400).json({
+      message: "Dados inválidos",
+      erros: errors.map((err) => err.constraints),
+    });
+  }
+
+  await service.deleteAccount(dto);
+  res.status(200);
 }
 
 export async function refreshToken(

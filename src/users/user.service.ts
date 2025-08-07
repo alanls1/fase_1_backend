@@ -1,4 +1,4 @@
-import { CreateUserDTO, loginDTO } from "./user.dto";
+import { CreateUserDTO, deleteDTO, loadUserDTO, loginDTO } from "./user.dto";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
@@ -16,12 +16,14 @@ export async function create(data: CreateUserDTO) {
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
+  const codigo_publico = nanoid(12);
 
   const newUser = await tbl_usuarios.create({
     nome: name,
     email,
     senha_hash: hashedPassword,
-    codigo_publico: nanoid(12),
+    codigo_publico,
+    uid_usuarios: uuidv4(),
   });
 
   return {
@@ -35,10 +37,9 @@ export async function create(data: CreateUserDTO) {
 export async function login(
   { email, password }: loginDTO,
   meta?: { ip_address?: string; user_agent?: string }
-) {
+): Promise<loadUserDTO> {
   const user = await tbl_usuarios.findOne({
     where: { email },
-    attributes: ["id", "email", "password", "role"],
   });
 
   if (!user) {
@@ -81,6 +82,12 @@ export async function login(
       name: user.nome,
     },
   };
+}
+
+export async function deleteAccount({ uid_usuarios }: deleteDTO) {
+  await tbl_usuarios.destroy({ where: { uid_usuarios } });
+
+  return 200;
 }
 
 export async function refreshToken(token: string) {

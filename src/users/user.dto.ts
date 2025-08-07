@@ -13,9 +13,13 @@ export class CreateUserDTO {
 }
 
 export class loadUserDTO {
-  name!: string;
-  email!: string;
-  phone!: string;
+  accessToken!: string;
+  refreshToken!: string;
+  user!: {
+    uid_usuario?: string;
+    email?: string;
+    name?: string;
+  };
 }
 
 export class loginDTO {
@@ -23,4 +27,10 @@ export class loginDTO {
   email!: string;
   @MinLength(1)
   password!: string;
+}
+
+export class deleteDTO {
+  @IsNotEmpty()
+  @IsString()
+  uid_usuarios!: string;
 }
