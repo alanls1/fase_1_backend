@@ -14,7 +14,8 @@ export async function authentication(
     return next(error);
   }
 
-  const token = authHeader.split("  ")[1];
+  const token = authHeader.replace("Bearer", "").trim();
+  console.log("token:", token);
 
   jwt.verify(token!, process.env.JWT_SECRET!, (err, decoded) => {
     if (err) {
@@ -23,6 +24,7 @@ export async function authentication(
       return next(error);
     }
     (req as any).user = decoded;
+    console.log("passei: ");
 
     next();
   });

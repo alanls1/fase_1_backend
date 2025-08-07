@@ -9,8 +9,6 @@ interface IUser_refresh_tokens {
   user_agent?: string;
   ip_address?: string;
   expires_at?: Date;
-  createdAt?: Date;
-  updatedAt?: Date;
 }
 
 export class user_refresh_tokens
@@ -23,8 +21,6 @@ export class user_refresh_tokens
   public user_agent?: string;
   public ip_address?: string;
   public expires_at?: Date;
-  public createdAt?: Date;
-  public updatedAt?: Date;
 }
 
 user_refresh_tokens.init(
@@ -54,17 +50,10 @@ user_refresh_tokens.init(
     ip_address: DataTypes.STRING(45),
 
     expires_at: DataTypes.DATE(),
-    createdAt: {
-      type: DataTypes.DATE,
-      defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
-    },
   },
   {
     sequelize,
-    modelName: "user_refresh_tokens",
+    timestamps: false,
+    modelName: "tbl_user_refresh_tokens",
   }
 );
