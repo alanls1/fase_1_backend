@@ -25,7 +25,7 @@ export async function getMetrics(req: Request, res: Response) {
     });
   }
 
-  const metrics: loadMetricDTO | null = await service.findOne(dto);
+  const metrics: loadMetricDTO[] | null = await service.findAll(dto);
   res.status(200).json(metrics);
 }
 

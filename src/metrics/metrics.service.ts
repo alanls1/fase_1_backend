@@ -11,10 +11,10 @@ import {
 import { tbl_medidas } from "./metrics.model";
 import { v4 as uuidv4 } from "uuid";
 
-export async function findOne({
+export async function findAll({
   uid_usuarios,
-}: findMetricDTO): Promise<loadMetricDTO | null> {
-  const metrics = await tbl_medidas.findOne({ where: { uid_usuarios } });
+}: findMetricDTO): Promise<loadMetricDTO[] | null> {
+  const metrics = await tbl_medidas.findAll({ where: { uid_usuarios } });
 
   if (!metrics) {
     throw new Error("Nenhuma métrica encontrada");
