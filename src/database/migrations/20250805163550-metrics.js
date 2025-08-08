@@ -44,6 +44,11 @@ module.exports = {
         type: Sequelize.DECIMAL(5, 2),
         allowNull: false,
       },
+      data: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.NOW,
+      },
     });
   },
 

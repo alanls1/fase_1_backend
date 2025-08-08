@@ -7,4 +7,5 @@ export interface IMetricts {
   quadril: number;
   coxa: number;
   calcado: number;
+  data: Date;
 }

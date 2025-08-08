@@ -9,6 +9,7 @@ export class loadMetricDTO {
   quadril!: number;
   coxa!: number;
   calcado!: number;
+  data!: Date;
 }
 
 export class loadMetricByDTO {
@@ -18,6 +19,7 @@ export class loadMetricByDTO {
   quadril!: number;
   coxa!: number;
   calcado!: number;
+  data!: Date;
 }
 
 export class findMetricDTO {

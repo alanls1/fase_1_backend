@@ -12,6 +12,7 @@ export class tbl_medidas extends Model<IMetricts> implements IMetricts {
   public quadril!: number;
   public coxa!: number;
   public calcado!: number;
+  public data!: Date;
 }
 
 tbl_medidas.init(
@@ -53,6 +54,11 @@ tbl_medidas.init(
     calcado: {
       type: DataTypes.DECIMAL(5, 2),
       allowNull: false,
+    },
+    data: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
     },
   },
   {

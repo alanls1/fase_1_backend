@@ -64,6 +64,7 @@ export async function newMetrics({
     torax,
     uid_medidas: uuidv4(),
     uid_usuarios,
+    data: new Date(),
   });
 
   return 201;
