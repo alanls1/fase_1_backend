@@ -11,6 +11,7 @@ import {
   loadMetricDTO,
 } from "./metrics.dto";
 import { validate } from "class-validator";
+import { CustomRequest } from "../types/user.interface";
 
 export async function getMetrics(req: Request, res: Response) {
   const dto = plainToInstance(findMetricDTO, req.query);
@@ -46,15 +47,10 @@ export async function getMetricsByCode(req: Request, res: Response) {
   res.status(200).json(metrics);
 }
 
-export async function postMetrics(req: Request, res: Response) {
-  console.log("Passei", req.body);
-
+export async function postMetrics(req: CustomRequest, res: Response) {
   const dto = plainToInstance(createNewMetricsDTO, req.body);
 
-  console.log("erros: ", dto);
-  console.log("erros: ", await validate(dto));
   const errors = await validate(dto);
-  console.log("erros: ", errors);
 
   if (errors.length > 0) {
     return res.status(400).json({
@@ -62,9 +58,8 @@ export async function postMetrics(req: Request, res: Response) {
       erros: errors.map((err) => err.constraints),
     });
   }
-
   await service.newMetrics(dto);
-  res.status(201);
+  res.status(201).json({ message: "Novas medidas registradas com sucesso" });
 }
 
 export async function putMetrics(req: Request, res: Response) {
@@ -80,7 +75,7 @@ export async function putMetrics(req: Request, res: Response) {
   }
 
   await service.updateMetrics(dto);
-  res.status(200);
+  res.status(200).json({ message: "Valores atualizado" });
 }
 
 export async function deleteMetrics(req: Request, res: Response) {
@@ -96,5 +91,5 @@ export async function deleteMetrics(req: Request, res: Response) {
   }
 
   await service.deleteMetricsS(dto);
-  res.status(200);
+  res.status(200).json({ message: "Métrica deletada" });
 }

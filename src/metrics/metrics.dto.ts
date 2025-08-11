@@ -69,9 +69,6 @@ export class editMetricsDTO {
   @IsString()
   uid_medidas!: string;
 
-  @IsString()
-  uid_usuarios?: string;
-
   @IsDecimal()
   busto?: number;
 

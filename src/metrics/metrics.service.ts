@@ -55,17 +55,20 @@ export async function newMetrics({
   torax,
   uid_usuarios,
 }: createNewMetricsDTO): Promise<number> {
-  await tbl_medidas.create({
-    busto,
-    calcado,
-    cintura,
-    coxa,
-    quadril,
-    torax,
-    uid_medidas: uuidv4(),
-    uid_usuarios,
-    data: new Date(),
-  });
+  await tbl_medidas.create(
+    {
+      busto,
+      calcado,
+      cintura,
+      coxa,
+      quadril,
+      torax,
+      uid_medidas: uuidv4(),
+      uid_usuarios,
+      data: new Date(),
+    },
+    { logging: console.log }
+  );
 
   return 201;
 }
@@ -78,7 +81,6 @@ export async function updateMetrics({
   quadril,
   torax,
   uid_medidas,
-  uid_usuarios,
 }: editMetricsDTO) {
   await tbl_medidas.update(
     {
@@ -88,8 +90,6 @@ export async function updateMetrics({
       coxa,
       quadril,
       torax,
-      uid_medidas: uuidv4(),
-      uid_usuarios,
     },
     { where: { uid_medidas } }
   );
