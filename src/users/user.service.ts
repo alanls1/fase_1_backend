@@ -143,7 +143,7 @@ export async function refreshToken(token: string) {
   return { accessToken, refreshToken };
 }
 
-export function createTokens(email?: string, id?: string, role?: string) {
+function createTokens(email?: string, id?: string, role?: string) {
   const accessToken = jwt.sign({ email, id, role }, process.env.JWT_SECRET!, {
     expiresIn: "15m",
   });
@@ -153,4 +153,10 @@ export function createTokens(email?: string, id?: string, role?: string) {
   });
 
   return { accessToken, refreshToken };
+}
+
+export async function revokeRefreshToken(token: string) {
+  await user_refresh_tokens.destroy({ where: { refresh_token: token } });
+
+  return "redirecionando...";
 }
