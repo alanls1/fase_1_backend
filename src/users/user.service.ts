@@ -94,7 +94,7 @@ export async function refreshToken(token: string) {
   let decoded;
   try {
     decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECURE!) as {
-      id: number;
+      id: string;
     };
   } catch (err) {
     throw new Error("Refresh token inválido ou expirado");
@@ -143,8 +143,8 @@ export async function refreshToken(token: string) {
   return { accessToken, refreshToken };
 }
 
-function createTokens(email?: string, id?: string, role?: string) {
-  const accessToken = jwt.sign({ email, id, role }, process.env.JWT_SECRET!, {
+function createTokens(email?: string, id?: string, code?: string) {
+  const accessToken = jwt.sign({ email, id, code }, process.env.JWT_SECRET!, {
     expiresIn: "15m",
   });
 

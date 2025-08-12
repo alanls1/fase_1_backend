@@ -4,13 +4,6 @@ import { plainToInstance } from "class-transformer";
 import { CreateUserDTO, deleteDTO, loginDTO } from "./user.dto";
 import { validate } from "class-validator";
 
-const cookieOptions = {
-  httpOnly: true,
-  sameSite: "lax",
-  maxAge: 1000 * 60 * 60 * 24 * 7,
-  secure: true,
-} as CookieOptions;
-
 export async function createUser(req: Request, res: Response) {
   const dto = plainToInstance(CreateUserDTO, req.body);
   const errors = await validate(dto);
@@ -49,10 +42,9 @@ export async function login(req: Request, res: Response) {
     user_agent,
   });
 
-  res.cookie("refreshToken", token.refreshToken, cookieOptions);
-
   res.status(200).json({
     accessToken: token.accessToken,
+    refreshToken: token.refreshToken,
     user: token.user,
   });
 }
@@ -78,31 +70,23 @@ export async function refreshToken(
   res: Response,
   next: NextFunction
 ) {
-  console.log("cookie: ", req.cookies);
-
-  const token = req.cookies.refreshToken;
+  const token = req.body.refreshToken;
   if (!token) return res.status(401).json({ message: "No refresh token" });
 
   //Se tudo estiver ok, passa o dto para o service
-  const newToken = await service.refreshToken(token.refreshToken);
-
-  // Substitui cookie
-  res.cookie("refreshToken", newToken.refreshToken, cookieOptions);
+  const newToken = await service.refreshToken(token);
 
   res.json({ accessToken: newToken.accessToken });
 }
 
 export async function logout(req: Request, res: Response) {
   try {
-    const token = req.cookies.refreshToken;
+    const token = req.body.refreshToken;
     if (token) {
       await service.revokeRefreshToken(token);
-      res.clearCookie("refreshToken", cookieOptions);
     }
     return res.json({ success: true });
   } catch (err) {
-    console.log("Err", err);
-
     return res.status(500).json({ message: "Erro no logout" });
   }
 }
