@@ -25,3 +25,4 @@ output "backend_server_ip" {
   description = "Endereço IP público do servidor backend"
   value       = aws_instance.backend_server.public_ip
 }
+

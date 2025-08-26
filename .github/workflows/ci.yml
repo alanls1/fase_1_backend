@@ -9,7 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -24,3 +23,15 @@ jobs:
 
       - name: Build project
         run: npm run build
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v3
+      - name: Criar artefato de deploy
+        run: zip -r sistema-medidas-backend.zip .
+      - uses: actions/upload-artifact@v3
+        with:
+          name: sistema-medidas-backend
+          path: sistema-medidas-backend.zip
