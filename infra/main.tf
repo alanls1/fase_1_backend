@@ -9,7 +9,7 @@ provider "aws" {
 # Servidor EC2 para o backend
 ###########################################
 resource "aws_instance" "backend_server" {
-  ami           = "ami-0c55b159cbfafe1f0" # Ubuntu Server 20.04 (exemplo)
+  ami           = "ami-0c55b159cbfafe1f0"
   instance_type = "t2.micro"
 
   tags = {
