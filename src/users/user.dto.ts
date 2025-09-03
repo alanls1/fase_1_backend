@@ -19,6 +19,7 @@ export class loadUserDTO {
     uid_usuario?: string | undefined;
     email?: string | undefined;
     name?: string | undefined;
+    codigo_publico?: string | undefined;
   };
 }
 

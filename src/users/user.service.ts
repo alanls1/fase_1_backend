@@ -80,6 +80,7 @@ export async function login(
       uid_usuario: user?.uid_usuarios,
       email: user?.email,
       name: user?.nome,
+      codigo_publico: user?.codigo_publico,
     },
   };
 }
